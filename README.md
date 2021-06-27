@@ -16,7 +16,7 @@ mongodb sink for spdlog library
 int main() {
   std::thread t1([&] {
     auto logging = spdlog::async_factory::create<spdlog::sinks::mongo_sink>(
-        "mongo_logger", "db", "collection");
+        "mongo_logger_1", "db", "collection");
     for (auto i = 0; i < 10; ++i) {
       logging->info("thread_1" + std::to_string(i));
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -25,7 +25,7 @@ int main() {
 
   std::thread t2([&] {
     auto logging = spdlog::async_factory::create<spdlog::sinks::mongo_sink>(
-        "mongo_logger", "db", "collection");
+        "mongo_logger_2", "db", "collection");
     for (auto i = 0; i < 10; ++i) {
       logging->info("thread_2" + std::to_string(i));
       std::this_thread::sleep_for(std::chrono::milliseconds(100));
