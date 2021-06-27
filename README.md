@@ -72,3 +72,19 @@ int main() {
   return 0;
 }
 ```
+
+### Example document from mongodb
+```JSON
+{
+  "_id": {
+    "$oid": "60d87492314f000087006980"
+  },
+  "timestamp": {
+    "$date": "2021-06-27T12:52:34.985Z"
+  },
+  "level": "info",
+  "message": "thread_1 5",
+  "logger_name": "mongo_logger1",
+  "thread_id": 18892
+}
+```
