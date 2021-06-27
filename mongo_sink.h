@@ -28,6 +28,8 @@
 #include <mongocxx/instance.hpp>
 #include <mongocxx/uri.hpp>
 
+#include <mutex>
+
 namespace spdlog {
 namespace sinks {
 class mongo_sink : public sink {
@@ -68,12 +70,14 @@ public:
                  << msg.payload.data() << "logger_name"
                  << msg.logger_name.data() << "thread_id"
                  << static_cast<int>(msg.thread_id) << finalize;
+      std::lock_guard<std::mutex> guard(mtx_);
       client_->database(db_name_).collection(coll_name_).insert_one(doc.view());
     }
   }
 
 private:
   static mongocxx::instance instance_;
+  std::mutex mtx_;
   std::string db_name_;
   std::string coll_name_;
   std::unique_ptr<mongocxx::client> client_ = nullptr;
